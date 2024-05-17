@@ -1,4 +1,4 @@
-let boxA = document.getElementById("A");
+let boxA = document.getElementById("A");       //making all of my boxes variables
 let boxB = document.getElementById("B");
 let boxC = document.getElementById("C");
 let boxD = document.getElementById("D");
@@ -7,13 +7,13 @@ let boxF = document.getElementById("F");
 let boxG = document.getElementById("G");
 let boxH = document.getElementById("H");
 let boxI = document.getElementById("I");
-let gameTextDiv = document.getElementById('new-game-text');
-let player, computer
-let inRound = false;
+let gameTextDiv = document.getElementById('new-game-text');  //making heading a variable
+let player, computer, currentPlayer        //variables used further down
+let inRound = false;        //setting inRound status to false, meaning game isn't being played
 // let box = document.getElementsByClassName('box');
 
-let startGame = document.getElementById('start-game')
-startGame.addEventListener('click', () => {
+let startGame = document.getElementById('start-game')       //making start game button a variable
+startGame.addEventListener('click', () => {     //clearing game board
     boxA.innerHTML = "";
     boxB.innerHTML = "";
     boxC.innerHTML = "";
@@ -24,34 +24,45 @@ startGame.addEventListener('click', () => {
     boxH.innerHTML = "";
     boxI.innerHTML = "";
 
-    inRound = true;
-    currentPlayer = player;
-    gameTextDiv.innerHTML = "Starting a new game. Player One, make your first play."
+    inRound = true;     //making inRound true because we're starting a new game
+    currentPlayer = player;     //making the first player be the player
+    gameTextDiv.innerHTML = "Starting a new game. Player One, make your first play."        //
     setTimeout(clearInnerHTML, 6000);
 });
 
+
+function switchPlayer () {      //switches between players
+    if (currentPlayer = player) {
+        currentPlayer = computer;
+    } else if (currentPlayer = computer) {
+        currentPlayer = player;
+    }
+    return
+}
 
 function clearInnerHTML () {    //removes the "Starting a new game...." text
     gameTextDiv.innerHTML = "";
 };
 
-// function () {
-//     if (inRound) {
+function playingRound () {
+    let box = document.getElementsByClassName("box");
 
-//     }
-//     }
+    box.addEventListener('click', () => {
+        if (inRound && player) {
+            document.getElementsByClassName('box').innerHTML = "X";
+            gameTextDiv.innerHTML = "Player One's turn is over. Computer, make your play."
+        } else if (inRound && computer) {
+            document.getElementsByClassName('box').innerHTML = "O";
+            gameTextDiv.innerHTML = "Computer's turn is over. Player One, make your play."
+        }
+        return
+    })
+    isXAWinner();
+    isOAWinner();    
+    switchPlayer();
 
-
-
-
-$(".box").on('click', () => {
-    if (player = currentPlayer) {
-        document.getElementsByClassName('box').innerHTML = "X";
-    } else if (computer = currentPlayer) {
-        document.getElementsByClassName('box').innerHTML = "O";
-    }
     return
-})
+}
 
 function isXAWinner () {
     if (boxA === "X" && boxB === "X" && boxC === "X") {
