@@ -1,6 +1,5 @@
-
-body {
-    background-color: rgb(200, 157, 240);
+.main {
+        background-color: rgb(200, 157, 240);
 }
 
 .game-board {
@@ -10,6 +9,7 @@ body {
     border: 4px groove black;
     background-color: darkcyan;
     color: black;
+    cursor: pointer;
     display: grid;
     grid-template-areas: 
         "a b c"
@@ -43,4 +43,5 @@ h1 {
     align-items: center;
     margin: auto;
 }
+
 
