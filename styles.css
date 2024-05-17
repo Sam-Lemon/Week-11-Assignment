@@ -1,0 +1,42 @@
+
+.game-board {
+    width: 625px;
+    height: 625px;
+    margin: auto;
+    border: 4px groove darkcyan;
+    background-color: darkcyan;
+    color: black;
+    display: grid;
+    grid-template-areas: 
+        "a b c"
+        "d e f"
+        "g h i";
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+}
+
+#start-game {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: grid;
+    margin: auto;
+}
+
+#new-game-text {
+    display: flex;
+    justify-content: center;
+}
+
+.box {
+    background-color: cyan;
+    border: 3px solid black;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
