@@ -9,7 +9,7 @@ let boxH = document.getElementById('h');
 let boxI = document.getElementById('i');
 
 let gameTextDiv = document.getElementById('new-game-text');  //making heading a variable
-let player, computer, currentPlayer        //variables used further down
+let playerOne, playerTwo, currentPlayer        //variables used further down
 let inRound = false;        //setting inRound status to false, meaning game isn't being played
 // let box = document.getElementsByClassName('box');
 
@@ -26,61 +26,62 @@ startGame.addEventListener('click', () => {     //clearing game board
     boxI.innerHTML = "";
 
     inRound = true;     //making inRound true because we're starting a new game
-    currentPlayer = player;     //making the first player be the player
-    gameTextDiv.innerHTML = "Starting a new game. Player One, make your first play."        //
+    currentPlayer = playerOne;     //making the first player be the player
+    gameTextDiv.innerHTML = "Starting a new game. Player One, make your first play."        
     setTimeout(clearInnerHTML, 6000);
+    playRound();
 });
 
 
 function switchPlayer () {      //switches between players
-    if (currentPlayer = player) {
-        currentPlayer = computer;
-    } else if (currentPlayer = computer) {
-        currentPlayer = player;
+    if (currentPlayer = playerOne) {
+        currentPlayer = playerTwo;
+    } else if (currentPlayer = playerTwo) {
+        currentPlayer = playerOne;
     }
     return
-}
+};
 
 function clearInnerHTML () {    //removes the "Starting a new game...." text
     gameTextDiv.innerHTML = "";
 };
 
-function playingRound () {
+function playRound () {
     let box = document.getElementsByClassName("box");
 
 
     //it's supposed to put the letter X or O in the box on a click but this functionality isn't working for me.
     box.addEventListener('click', () => {
-        if (inRound && player) {
+        if (inRound && playerOne) {
             document.getElementsByClassName('box').innerHTML = "X";
-            gameTextDiv.innerHTML = "Player One's turn is over. Computer, make your play."
-        } else if (inRound && computer) {
+            gameTextDiv.innerHTML = "Player One's turn is over. Player Two, make your play."
+        } else if (inRound && playerTwo) {
             document.getElementsByClassName('box').innerHTML = "O";
-            gameTextDiv.innerHTML = "Computer's turn is over. Player One, make your play."
+            gameTextDiv.innerHTML = "Player Two's turn is over. Player One, make your play."
         }
         return
     })
-    isXAWinner(); //run the function to check if player X has won
-    isOAWinner(); //run the function to check if player O has won
+    isXAWinner(); //run the function to check if playerOne has won
+    isOAWinner(); //run the function to check if playerTwo has won
     switchPlayer(); //switches players
     return;
 }
 
 function isXAWinner () { //all the options for X to win
     if (boxA === "X" && boxB === "X" && boxC === "X") {
-        alert(`${player} is the winner!`)
+        alert(`${playerOne} is the winner!`)
     } else if (boxA === "X" && boxD === "X" && boxG === "X") {
-            alert(`${player} is the winner!`);  
+            alert(`${playerOne} is the winner!`);  
     } else if (boxA === "X" && boxE === "X" && boxI === "X") {
-            alert(`${player} is the winner!`);
+            alert(`${playerOne} is the winner!`);
     } else if (boxB === "X" && boxE === "X" && boxH === "X") {
-            alert(`${player} is the winner!`);
+            alert(`${playerOne} is the winner!`);
     } else if (boxC === "X" && boxE === "X" && boxG === "X") {
-            alert(`${player} is the winner!`);
+            alert(`${playerOne} is the winner!`);
     } else if (boxC === "X" && boxF === "X" && boxI === "X") {
-            alert(`${player} is the winner!`);
+            alert(`${playerOne} is the winner!`);
     } else  if (boxG === "X" && boxH === "X" && boxI === "X") {
-            alert(`${player} is the winner!`);
+            alert(`${playerOne} is the winner!`);
     } else {
         gameTextDiv.innerHTML = "Invalid click, please try again."
     }
@@ -88,19 +89,19 @@ function isXAWinner () { //all the options for X to win
 
 function isOAWinner () { //all the options for O to win
     if (boxA === "O" && boxB === "O" && boxC === "O") {
-        alert(`${computer} is the winner!`)
+        alert(`${playerTwo} is the winner!`)
     } else if (boxA === "O" && boxD === "O" && boxG === "O") {
-            alert(`${computer} is the winner!`);  
+            alert(`${playerTwo} is the winner!`);  
     } else if (boxA === "O" && boxE === "O" && boxI === "O") {
-            alert(`${computer} is the winner!`);
+            alert(`${playerTwo} is the winner!`);
     } else if (boxB === "O" && boxE === "O" && boxH === "O") {
-            alert(`${computer} is the winner!`);
+            alert(`${playerTwo} is the winner!`);
     } else if (boxC === "O" && boxE === "O" && boxG === "O") {
-            alert(`${computer} is the winner!`);
+            alert(`${playerTwo} is the winner!`);
     } else if (boxC === "O" && boxF === "O" && boxI === "O") {
-            alert(`${computer} is the winner!`);
+            alert(`${playerTwo} is the winner!`);
     } else  if (boxG === "O" && boxH === "O" && boxI === "O") {
-            alert(`${computer} is the winner!`);
+            alert(`${playerTwo} is the winner!`);
     } else {
         gameTextDiv.innerHTML = "Invalid click, please try again."
     }
