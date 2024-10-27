@@ -9,7 +9,7 @@ let boxH = document.getElementById('h');
 let boxI = document.getElementById('i');
 
 let gameTextDiv = document.getElementById('new-game-text');  //making heading a variable
-let playerOne, playerTwo, currentPlayer        //variables used further down
+// let playerOne, playerTwo, currentPlayer        //variables used further down
 let inRound = false;        //setting inRound status to false, meaning game isn't being played
 // let box = document.getElementsByClassName('box');
 
@@ -32,35 +32,46 @@ startGame.addEventListener('click', () => {     //clearing game board
     playRound();
 });
 
-
 function switchPlayer () {      //switches between players
-    if (currentPlayer = playerOne) {
-        currentPlayer = playerTwo;
-    } else if (currentPlayer = playerTwo) {
-        currentPlayer = playerOne;
-    }
-    return
+    currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
+    // if (currentPlayer = playerOne) {
+    //     currentPlayer = playerTwo;
+    // } else if (currentPlayer = playerTwo) {
+    //     currentPlayer = playerOne;
+    // }
+    // return
 };
 
 function clearInnerHTML () {    //removes the "Starting a new game...." text
     gameTextDiv.innerHTML = "";
 };
 
+playerOne = "Player One";
+playerTwo = "Player Two";
+currentPlayer = playerOne;
+
 function playRound () {
-    let box = document.getElementsByClassName("box");
+    let boxes = document.getElementsByClassName("box");
 
-
-    //it's supposed to put the letter X or O in the box on a click but this functionality isn't working for me.
-    box.addEventListener('click', () => {
-        if (inRound && playerOne) {
-            document.getElementsByClassName('box').innerHTML = "X";
-            gameTextDiv.innerHTML = "Player One's turn is over. Player Two, make your play."
-        } else if (inRound && playerTwo) {
-            document.getElementsByClassName('box').innerHTML = "O";
-            gameTextDiv.innerHTML = "Player Two's turn is over. Player One, make your play."
+Array.from(boxes).forEach(box => {
+    box.addEventListener('click', function handleBoxClick() {
+        //Check if the box is empty and game is in progress
+        if (inRound $$ box.innerHTML === "") {
+            box.innerHTML = currentPlayer === playerOne ? "X": "O"; //Add X or O based on current player
+            gameTextDiv.innerHTML = `${currentPlayer}'s turn is over. ${currentPlayer === playerOne ? playerTwo : playerOne}, make your play.`;
         }
-        return
     })
+})
+    // box.addEventListener('click', () => {
+    //     if (inRound && playerOne) {
+    //         document.getElementsByClassName('box').innerHTML = "X";
+    //         gameTextDiv.innerHTML = "Player One's turn is over. Player Two, make your play."
+    //     } else if (inRound && playerTwo) {
+    //         document.getElementsByClassName('box').innerHTML = "O";
+    //         gameTextDiv.innerHTML = "Player Two's turn is over. Player One, make your play."
+    //     }
+    //     return
+    // })
     isXAWinner(); //run the function to check if playerOne has won
     isOAWinner(); //run the function to check if playerTwo has won
     switchPlayer(); //switches players
