@@ -44,4 +44,9 @@ h1 {
     margin: auto;
 }
 
+.winning-combination {
+    background-color: rgb(109, 233, 105);
+    /* background-color: rgb(244, 121, 203); */
+    position: relative;
+}
 

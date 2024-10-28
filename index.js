@@ -1,128 +1,85 @@
-let boxA = document.getElementById('a');
-let boxB = document.getElementById('b');
-let boxC = document.getElementById('c');
-let boxD = document.getElementById('d');
-let boxE = document.getElementById('e');
-let boxF = document.getElementById('f');
-let boxG = document.getElementById('g');
-let boxH = document.getElementById('h');
-let boxI = document.getElementById('i');
+const boxes = document.querySelectorAll(".box"); //Selects all of the boxes
+let gameTextDiv = document.getElementById("new-game-text");
+let inRound = false; //initial status is not in a round
 
-let gameTextDiv = document.getElementById('new-game-text');  //making heading a variable
-// let playerOne, playerTwo, currentPlayer        //variables used further down
-let inRound = false;        //setting inRound status to false, meaning game isn't being played
-// let box = document.getElementsByClassName('box');
+let playerOne = "Player One";
+let playerTwo = "Player Two";
+let playerOneMark = "X";
+let playerTwoMark = "O";
+let currentPlayer = playerOne;
 
-let startGame = document.getElementById('start-game')       //making start game button a variable
-startGame.addEventListener('click', () => {     //clearing game board
-    boxA.innerHTML = "";
-    boxB.innerHTML = "";
-    boxC.innerHTML = "";
-    boxD.innerHTML = "";
-    boxE.innerHTML = "";
-    boxF.innerHTML = "";
-    boxG.innerHTML = "";
-    boxH.innerHTML = "";
-    boxI.innerHTML = "";
+let startGame = document.getElementById("start-game");
 
-    inRound = true;     //making inRound true because we're starting a new game
-    currentPlayer = playerOne;     //making the first player be the player
-    gameTextDiv.innerHTML = "Starting a new game. Player One, make your first play."        
-    setTimeout(clearInnerHTML, 6000);
-    playRound();
+startGame.addEventListener("click", () => {
+  Array.from(boxes).forEach((box) => {
+    box.innerHTML = ""; //Clears each box
+    box.classList.remove("winning-combination"); //Removes the win styling
+  });
+
+  inRound = true; //Starts a new game
+  currentPlayer = playerOne; //making the first player playerOne
+  gameTextDiv.innerHTML =
+    "Starting a new game. Player One, make your first play.";
+  playRound();
 });
 
-function switchPlayer () {      //switches between players
-    currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
-    // if (currentPlayer = playerOne) {
-    //     currentPlayer = playerTwo;
-    // } else if (currentPlayer = playerTwo) {
-    //     currentPlayer = playerOne;
-    // }
-    // return
-};
+console.log("The current player is: " + currentPlayer);
 
-function clearInnerHTML () {    //removes the "Starting a new game...." text
-    gameTextDiv.innerHTML = "";
-};
+function switchPlayer() {
+  currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
+}
 
-playerOne = "Player One";
-playerTwo = "Player Two";
-currentPlayer = playerOne;
+// switchPlayer()
+// console.log("After switching, the current player is: " + currentPlayer);
 
-function playRound () {
-    let boxes = document.getElementsByClassName("box");
+function playRound() {
+  Array.from(boxes).forEach((box) => {
+    box.addEventListener(
+      "click",
+      function handleBoxClick() {
+        if (inRound && box.innerHTML === "") {
+          box.innerHTML =
+            currentPlayer === playerOne ? playerOneMark : playerTwoMark;
+          checkWinner(
+            currentPlayer === playerOne ? playerOneMark : playerTwoMark
+          );
 
-Array.from(boxes).forEach(box => {
-    box.addEventListener('click', function handleBoxClick() {
-        //Check if the box is empty and game is in progress
-        if (inRound $$ box.innerHTML === "") {
-            box.innerHTML = currentPlayer === playerOne ? "X": "O"; //Add X or O based on current player
-            gameTextDiv.innerHTML = `${currentPlayer}'s turn is over. ${currentPlayer === playerOne ? playerTwo : playerOne}, make your play.`;
+          if (inRound) {
+            gameTextDiv.innerHTML = `${currentPlayer}'s turn is over. ${
+              currentPlayer === playerOne ? playerTwo : playerOne
+            }, make your play.`;
+
+            switchPlayer(); //Switches to next player after each click
+          }
         }
-    })
-})
-    // box.addEventListener('click', () => {
-    //     if (inRound && playerOne) {
-    //         document.getElementsByClassName('box').innerHTML = "X";
-    //         gameTextDiv.innerHTML = "Player One's turn is over. Player Two, make your play."
-    //     } else if (inRound && playerTwo) {
-    //         document.getElementsByClassName('box').innerHTML = "O";
-    //         gameTextDiv.innerHTML = "Player Two's turn is over. Player One, make your play."
-    //     }
-    //     return
-    // })
-    isXAWinner(); //run the function to check if playerOne has won
-    isOAWinner(); //run the function to check if playerTwo has won
-    switchPlayer(); //switches players
-    return;
+      },
+      { once: true }
+    ); //Each box only gets clicked once per game
+  });
 }
 
-function isXAWinner () { //all the options for X to win
-    if (boxA === "X" && boxB === "X" && boxC === "X") {
-        alert(`${playerOne} is the winner!`)
-    } else if (boxA === "X" && boxD === "X" && boxG === "X") {
-            alert(`${playerOne} is the winner!`);  
-    } else if (boxA === "X" && boxE === "X" && boxI === "X") {
-            alert(`${playerOne} is the winner!`);
-    } else if (boxB === "X" && boxE === "X" && boxH === "X") {
-            alert(`${playerOne} is the winner!`);
-    } else if (boxC === "X" && boxE === "X" && boxG === "X") {
-            alert(`${playerOne} is the winner!`);
-    } else if (boxC === "X" && boxF === "X" && boxI === "X") {
-            alert(`${playerOne} is the winner!`);
-    } else  if (boxG === "X" && boxH === "X" && boxI === "X") {
-            alert(`${playerOne} is the winner!`);
-    } else {
-        gameTextDiv.innerHTML = "Invalid click, please try again."
+function checkWinner(mark) {
+  const winningCombinations = [
+    ["a", "b", "c"], //first row
+    ["d", "e", "f"], //second row
+    ["g", "h", "i"], //third row
+    ["a", "d", "g"], //first column
+    ["b", "e", "h"], //second column
+    ["c", "f", "i"], //third column
+    ["a", "e", "i"], //left to right diagonal
+    ["c", "e", "g"], //right to left diagonal
+  ];
+
+ const isWinner = winningCombinations.some(combination => {
+    const isMatch = combination.every(id => document.getElementById(id).innerHTML === mark);
+    if (isMatch) {
+        combination.forEach(id => document.getElementById(id).classList.add('winning-combination')); //Adding class for styling purposes
     }
+    return isMatch;
+ });
+
+ if (isWinner) {
+    gameTextDiv.innerHTML = `${mark === "X" ? playerOne : playerTwo} is the winner!`;
+    inRound = false; //Stops the game if there's a winner
+ }
 }
-
-function isOAWinner () { //all the options for O to win
-    if (boxA === "O" && boxB === "O" && boxC === "O") {
-        alert(`${playerTwo} is the winner!`)
-    } else if (boxA === "O" && boxD === "O" && boxG === "O") {
-            alert(`${playerTwo} is the winner!`);  
-    } else if (boxA === "O" && boxE === "O" && boxI === "O") {
-            alert(`${playerTwo} is the winner!`);
-    } else if (boxB === "O" && boxE === "O" && boxH === "O") {
-            alert(`${playerTwo} is the winner!`);
-    } else if (boxC === "O" && boxE === "O" && boxG === "O") {
-            alert(`${playerTwo} is the winner!`);
-    } else if (boxC === "O" && boxF === "O" && boxI === "O") {
-            alert(`${playerTwo} is the winner!`);
-    } else  if (boxG === "O" && boxH === "O" && boxI === "O") {
-            alert(`${playerTwo} is the winner!`);
-    } else {
-        gameTextDiv.innerHTML = "Invalid click, please try again."
-    }
-}
-
-
-
-
-
-
-
-
-
